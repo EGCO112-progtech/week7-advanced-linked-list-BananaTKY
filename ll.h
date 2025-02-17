@@ -1,7 +1,10 @@
 
 // self-referential structure
 struct Node {
+   struct Node *pPtr ;
+
    int data; // each listNode contains a character
+
    struct Node *nextPtr; // pointer to next node
 }; // end structure listNode
 
@@ -15,6 +18,7 @@ int isEmpty( LLPtr sPtr );
 void insert( LLPtr *sPtr, int value );
 void printList( LLPtr currentPtr );
 void instructions( void );
+void printList_R(LLPtr previousPtr) ;
 
 
 // display program instructions to user
@@ -38,9 +42,9 @@ void insert( LLPtr *sPtr, int value )
    if ( newPtr != NULL ) { // is space available
       newPtr->data = value; // place value in node
       newPtr->nextPtr = NULL; // node does not link to another node
-    
-       
       previousPtr = NULL;
+      newPtr->pPtr = previousPtr ;
+
       currentPtr = *sPtr;
 
       // loop to find the correct location in the list
@@ -50,18 +54,20 @@ void insert( LLPtr *sPtr, int value )
       } // end while
 
       // insert new node at beginning of list
-      if ( previousPtr == NULL ) {
+      if ( previousPtr == NULL ) 
+      {
          newPtr->nextPtr = *sPtr;
-      
-         *sPtr = newPtr;
+         if (*sPtr) (*sPtr) -> pPtr = newPtr ;
+         (*sPtr) = newPtr;
         
       } // end if
-      else { // insert new node between previousPtr and currentPtr
+      else
+      { // insert new node between previousPtr and currentPtr
          previousPtr->nextPtr = newPtr;
-   
-          
+         newPtr -> pPtr = previousPtr ;
+
          newPtr->nextPtr = currentPtr;
- 
+         if(currentPtr) currentPtr -> pPtr = newPtr ;
          
       } // end else
    } // end if
@@ -78,14 +84,16 @@ int deletes( LLPtr *sPtr, int value )
    LLPtr tempPtr; // temporary node pointer
 
    // delete first node
-   if ( value == ( *sPtr )->data ) {
+   if ( value == ( *sPtr )->data ) 
+   {
       tempPtr = *sPtr; // hold onto node being removed
       *sPtr = ( *sPtr )->nextPtr; // de-thread the node
+      if ((*sPtr)) (*sPtr) -> pPtr = NULL ;
       free( tempPtr ); // free the de-threaded node
       return value;
    } // end if
    else {
-      previousPtr = *sPtr;
+      previousPtr = (*sPtr);
       currentPtr = ( *sPtr )->nextPtr;
 
       // loop to find the correct location in the list
@@ -97,7 +105,9 @@ int deletes( LLPtr *sPtr, int value )
       // delete node at currentPtr
       if ( currentPtr != NULL ) {
          tempPtr = currentPtr;
-         previousPtr->nextPtr = currentPtr->nextPtr;
+         currentPtr = currentPtr -> nextPtr ;
+         previousPtr->nextPtr = currentPtr ;
+         if(currentPtr) currentPtr -> pPtr = previousPtr ;
          free( tempPtr );
          return value;
       } // end if
@@ -135,3 +145,32 @@ void printList( LLPtr currentPtr )
        
    } // end else
 } // end function printList
+
+void printList_R( LLPtr currentPtr )
+{
+
+   if(isEmpty(currentPtr))
+   {
+      puts("List is empty.\n") ;
+   }
+   else
+   {
+      puts("The reversed list is :") ;
+
+      // while not the end of the list
+
+      while(currentPtr -> nextPtr != NULL)
+      {
+         currentPtr = currentPtr -> nextPtr ;
+      }
+
+      while ( currentPtr -> pPtr != NULL ) 
+      {
+         printf( "%d --> ", currentPtr -> data );
+         currentPtr = currentPtr->pPtr;
+      } // end while
+
+      printf( "%d --> NULL\n",currentPtr->data );
+       
+   }
+}

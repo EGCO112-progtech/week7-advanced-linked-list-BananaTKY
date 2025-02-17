@@ -2,6 +2,7 @@
 // Inserting and deleting nodes in a list
 #include <stdio.h>
 #include <stdlib.h>
+#include "ll.h"
 
 int main( void )
 { 
@@ -22,6 +23,7 @@ int main( void )
             scanf( "%d", &item );
             insert( &startPtr, item ); // insert item in list
             printList( startPtr );
+            printList_R( startPtr );
             break;
          case 2: // delete an element
             // if list is not empty
@@ -33,6 +35,7 @@ int main( void )
                if ( deletes( &startPtr, item ) ) { // remove item
                   printf( "%d deleted.\n", item );
                   printList( startPtr );
+                  printList_R( startPtr );
                } // end if
                else {
                   printf( "%d not found.\n\n", item );
