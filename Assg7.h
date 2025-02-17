@@ -137,11 +137,11 @@ struct Node {
  
        // while not the end of the list
        while ( currentPtr->nextPtr!= NULL ) {
-          printf( "%d %s-->", currentPtr->id , currentPtr -> name);
+          printf( "%d %s -->", currentPtr->id , currentPtr -> name);
           currentPtr = currentPtr->nextPtr;
        } // end while
  
-       printf( "%d %s-->NULL\n",currentPtr->id , currentPtr -> name);
+       printf( "%d %s -->NULL\n",currentPtr->id , currentPtr -> name);
         
  
       
@@ -158,8 +158,6 @@ struct Node {
     }
     else
     {
-       puts("The reversed list is :") ;
- 
        // while not the end of the list
  
        while(currentPtr -> nextPtr != NULL)
