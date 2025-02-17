@@ -137,11 +137,11 @@ struct Node {
  
        // while not the end of the list
        while ( currentPtr->nextPtr!= NULL ) {
-          printf( "%d %s--> ", currentPtr->id , currentPtr -> name);
+          printf( "%d %s-->", currentPtr->id , currentPtr -> name);
           currentPtr = currentPtr->nextPtr;
        } // end while
  
-       printf( "%d %s--> NULL\n",currentPtr->id , currentPtr -> name);
+       printf( "%d %s-->NULL\n",currentPtr->id , currentPtr -> name);
         
  
       
@@ -167,13 +167,13 @@ struct Node {
           currentPtr = currentPtr -> nextPtr ;
        }
  
-       while ( currentPtr!= NULL ) 
+       while (currentPtr -> pPtr != NULL ) 
        {
-          printf( "%d %s --> ", currentPtr -> id , currentPtr -> name );
+          printf( "%d %s -->", currentPtr -> id , currentPtr -> name );
           currentPtr = currentPtr->pPtr;
        } // end while
  
-       printf( "NULL\n");
+       printf( "%d %s -->NULL\n",currentPtr -> id , currentPtr -> name );
         
     }
  }
